@@ -47,3 +47,32 @@ def test_create():
 
     assert api.delete_user(res.json()["id"]).status_code == HTTPStatus.NO_CONTENT
     # Assert.validate_schema(res.json())
+
+
+def test_registration():
+    res = api.registration("eve.holt@reqres.in", "pistol")
+
+    assert res.status_code == HTTPStatus.OK
+    res_body = res.json()
+    # Assert.validate_schema(res_body)
+
+    example = {
+        "id": 4,
+        "token": "QpwL5tke4Pnpja7X4"
+    }
+    assert example == res_body
+
+
+def test_registration_not():
+    res = api.registration_not("eve.holt@reqres.in")
+
+    assert res.status_code == HTTPStatus.BAD_REQUEST
+    res_body = res.json()
+    # Assert.validate_schema(res_body)
+
+    example = {
+
+        "error": "Missing password"
+    }
+
+    assert example == res_body
